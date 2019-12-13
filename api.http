@@ -1,0 +1,208 @@
+# LSM Hub
+# Base user API for LMS
+
+###
+
+# null
+PARAMETERS {{host}}/users
+
+###
+
+# return a list of all users
+GET {{host}}/users
+
+###
+
+# Creates a user.
+POST {{host}}/users
+Content-Type: application/json
+
+{
+    "userId": 0,
+    "name": "name",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "email": "email",
+    "dob": "",
+    "age": "age",
+    "apps": []
+}
+
+###
+
+# null
+PARAMETERS {{host}}/user/{{param_userId}}
+
+###
+
+# Returns a user by ID.
+GET {{host}}/user/{{param_userId}}
+
+###
+
+# Delete a user by ID.
+DELETE {{host}}/user/{{param_userId}}
+
+###
+
+# Update user by ID.
+PUT {{host}}/user/{{param_userId}}
+
+###
+
+# null
+PARAMETERS {{host}}/apps
+
+###
+
+# returns a list of all applications
+GET {{host}}/apps
+
+###
+
+# add an application
+POST {{host}}/apps
+Content-Type: application/json
+
+{
+    "appId": 0,
+    "appName": "appName",
+    "appType": []
+}
+
+###
+
+# null
+PARAMETERS {{host}}/apps/{{param_appId}}
+
+###
+
+# Returns an app by ID.
+GET {{host}}/apps/{{param_appId}}
+
+###
+
+# Delete an app by ID.
+DELETE {{host}}/apps/{{param_appId}}
+
+###
+
+# Update application by ID.
+PUT {{host}}/apps/{{param_appId}}
+
+###
+
+# Server check
+GET {{host}}/ping
+
+###
+
+# null
+PARAMETERS {{host}}/user/{{param_userId}}/apps
+
+###
+
+# returns a list of users apps
+GET {{host}}/user/{{param_userId}}/apps
+
+###
+
+# add and app to the user.
+POST {{host}}/user/{{param_userId}}/apps
+Content-Type: application/json
+
+{
+    "userId": 0,
+    "name": "name",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "email": "email",
+    "dob": "",
+    "age": "age",
+    "apps": []
+}
+
+###
+
+# Delete a user app by ID.
+DELETE {{host}}/user/{{param_userId}}/apps
+
+###
+
+# Update users application.
+PUT {{host}}/user/{{param_userId}}/apps
+
+###
+
+# null
+PARAMETERS {{host}}/user/{{param_userId}}/apps/{{param_appId}}
+
+###
+
+# returns a one of users apps
+GET {{host}}/user/{{param_userId}}/apps/{{param_appId}}
+
+###
+
+# add and app to the user.
+POST {{host}}/user/{{param_userId}}/apps/{{param_appId}}
+Content-Type: application/json
+
+{
+    "userId": "userId",
+    "userName": "userName",
+    "apps": []
+}
+
+###
+
+# Delete a user app by ID.
+DELETE {{host}}/user/{{param_userId}}/apps/{{param_appId}}
+
+###
+
+# Update users application.
+PUT {{host}}/user/{{param_userId}}/apps/{{param_appId}}
+
+###
+
+# null
+PARAMETERS {{host}}/app/{{param_appId}}/users
+
+###
+
+# returns a list of App users
+GET {{host}}/app/{{param_appId}}/users
+
+###
+
+# Delete a user from an app
+DELETE {{host}}/app/{{param_appId}}/users
+
+###
+
+# null
+PARAMETERS {{host}}/apps/{{param_appId}}/user/{{param_userId}}
+
+###
+
+# returns a single app user
+GET {{host}}/apps/{{param_appId}}/user/{{param_userId}}
+
+###
+
+# add and app to the user.
+POST {{host}}/apps/{{param_appId}}/user/{{param_userId}}
+Content-Type: application/json
+
+{
+    "userId": "userId",
+    "appId": "appId",
+    "userName": "userName"
+}
+
+###
+
+# Delete a user app by ID.
+DELETE {{host}}/apps/{{param_appId}}/user/{{param_userId}}
+

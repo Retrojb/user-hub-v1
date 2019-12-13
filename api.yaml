@@ -1,0 +1,587 @@
+openapi: 3.0.0
+info:
+  title: LSM Hub
+  description: Base user API for LMS
+  version: 1.0.0
+servers:
+  - url: http://api-lsm.com
+    description: Main (production) server
+  - url: http://api-dev-lsm.com
+    description: Internal staging server for development environment.
+  - url: '{protocol}://localhost:8000'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+paths:
+  /users:
+    parameters: 
+      - in: query
+        name: findUserByUserame
+        schema:
+          type: string
+        description: find a user by username
+      - in: path
+        name: findByUserId
+        required: true
+        schema:
+          type: string
+        description: find user by userId
+    get:
+      operationId: getAllUsers
+      summary: return a list of all users
+      tags:
+        - Users
+      responses:
+        200:
+          description: get all users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: could not get all users
+          content:
+            application/json:
+              schema: 
+                type: string
+                description: Failed to get Users
+    post:
+      operationId: createUser
+      summary: Creates a user.
+      tags:
+        - Users
+      requestBody:
+        description: Backend should generate a user oid upon creation. Needs to verify that **user oid** and **username** are not duplicates. *optional* age and apps. User will not have any apps until the user is created.
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/User'
+      responses: 
+        '201':
+          description: Created
+        '402':
+          description: Failed to Create User
+  /user/{userId}:
+    parameters: 
+      - name: userId
+        in: path
+        description: User updates
+        required: true
+        schema:
+          $ref: '#/components/schemas/User'
+      - name: getUserById
+        in: query
+        description: search for user
+        schema:
+          $ref: '#/components/schemas/User'
+    get:
+      summary: Returns a user by ID.
+      tags:
+        - User
+      responses: 
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: Delete a user by ID.
+      tags:
+        - User
+      responses: 
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      operationId: updateUser
+      summary: Update user by ID.
+      tags: 
+        - User
+      responses:
+        200:
+          description: User Updated
+        500:
+          description: Internal Server Error User not updated.
+  /apps:
+    parameters:
+      - in: query
+        name: findAppByAppName
+        schema:
+          $ref: '#/components/schemas/Apps'
+        description: find a user by username
+      - in: path
+        name: appId
+        required: true
+        schema:
+          $ref: '#/components/schemas/Apps'
+        description: find app by appId
+    get:
+      operationId: getAllApps
+      summary: returns a list of all applications
+      tags:
+        - Apps
+      responses:
+        200:
+          description: get all applications
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: string
+        400:
+          description: could not get all 
+            applications
+    post:
+      operationId: createApp
+      summary: add an application
+      tags:
+        - Apps
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Apps'
+      responses: 
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apps'
+        501:
+          description: Failed to create
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apps'
+  /apps/{appId}:
+    parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Apps'
+    get:
+      operationId: getApp
+      summary: Returns an app by ID.
+      tags:
+        - App
+      responses: 
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apps'
+        400:
+          description: could not get app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apps'
+    delete:
+      summary: Delete an app by ID.
+      tags:
+        - App
+      responses: 
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Apps'
+    put:
+      operationId: updateApp
+      summary: Update application by ID.
+      tags: 
+        - App
+      responses:
+        200:
+          description: App Updated
+        500:
+          description: Internal Server Error User not updated.
+  /ping:
+    get:
+      summary: Server check
+      tags: 
+        - ping
+      parameters: 
+        - in: header
+          name: X-Request-ID
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        200:
+          description: Server communicating
+        500:
+          description: Internal server error on ping check
+  /user/{userId}/apps:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/User'
+    get:
+      operationId: getAllUserApps
+      summary: returns a list of users apps
+      tags:
+        - UsersApps
+      responses:
+        200:
+          description: get all users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserApps'
+        400:
+          description: could not get all users
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UserApps'
+    post:
+      operationId: addAppToUser
+      summary: add and app to the user.
+      tags:
+        - UsersApps
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/User'
+      responses: 
+        '201':
+          description: Created            
+    delete:
+      summary: Delete a user app by ID.
+      tags:
+        - UsersApps
+      responses: 
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserApps'
+    put:
+      operationId: updateUserApps
+      summary: Update users application.
+      tags: 
+        - UsersApps
+      responses:
+        200:
+          description: User app array updated
+        500:
+          description: Internal Server Error User not updated.
+  /user/{userId}/apps/{appId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserApps'
+      - name: appId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserApps'
+    get:
+      operationId: getOneUserApps
+      summary: returns a one of users apps
+      tags:
+        - UserApps
+      responses:
+        200:
+          description: get all users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserApps'
+        400:
+          description: could not get all users
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UserApps'
+    post:
+      operationId: addOneAppToUser
+      summary: add and app to the user.
+      tags:
+        - UserApps
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/UserApps'
+      responses: 
+        '201':
+          description: Created            
+    delete:
+      summary: Delete a user app by ID.
+      tags:
+        - UserApps
+      responses: 
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserApps'
+    put:
+      operationId: updateOneUserApp
+      summary: Update users application.
+      tags: 
+        - UserApps
+      responses:
+        200:
+          description: User app array updated
+        500:
+          description: Internal Server Error User not updated.
+  /app/{appId}/users:
+    parameters: 
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppUser'
+      - name: appId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppUser'
+    get:
+      operationId: getAppUsers
+      summary: returns a list of App users
+      tags:
+        - AppUser
+      responses:
+        200:
+          description: get all app users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUser'
+        400:
+          description: could not get all app users
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UserApps'
+    delete:
+      summary: Delete a user from an app
+      tags:
+        - AppUser
+      responses: 
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserApps'
+  /apps/{appId}/user/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppUser'
+      - name: appId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppUser'
+    get:
+      operationId: getAnAppsUser
+      summary: returns a single app user
+      tags:
+        - AppUser
+      responses:
+        200:
+          description: get all users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUser'
+        400:
+          description: could not get all users
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/AppUser'
+    post:
+      operationId: addUserToApp
+      summary: add and app to the user.
+      tags:
+        - AppUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/AppUser'
+      responses: 
+        '201':
+          description: Created            
+    delete:
+      summary: Delete a user app by ID.
+      tags:
+        - AppUser
+      responses: 
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUser'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 4352
+        name:
+          type: string
+          example: exampleUser123
+        firstName:
+          type: string
+          example: Emma
+        lastName:
+          type: string
+          example: Watson
+        email:
+          type: string
+          format: email
+          example: Emma@email.com
+        dob:
+          type: string
+          format: date
+          example: 08/01/2000
+          nullable: true
+        age:
+          type: string
+          example: 28
+          nullable: true
+        apps:
+          $ref: "#/components/schemas/AppObj"
+      required:  
+        - id
+        - username
+        - firstName
+        - lastName
+        - email
+    Apps:
+      type: object
+      properties:
+        appId:
+          type: integer
+          example: 231
+        appName:
+          type: string
+          example: Example App
+        appType:
+          type: array
+          items:
+            type: string
+          example: [ mobile, web ]
+          nullable: true
+      required:  
+        - appId
+        - appName
+    UserApps:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 2345
+        userName:
+          type: string
+          example: exampleUser1234
+        apps:
+          $ref: "#/components/schemas/AppObj"
+      required:
+        - userId
+        - apps
+    AppUsers:
+      properties:
+        userId:
+          type: array
+          example: 2347
+        appId:
+          type: string
+          example: 234378
+    AppUser:
+      properties:
+        userId:
+          type: string
+          example: 237
+        appId:
+          type: string
+          example: App1
+        userName:
+          type: string
+          example: [ user1, user2, user3 ]
+    AppObj:
+      description: An array of objects that represent the application in an object format. Will instanciate the  the application. User is not required to have any applications. 
+      type: array
+      items:
+        type: object
+        properties:
+          appId:
+            type: integer
+          appName: 
+            type: string
+        example: [ 
+                    {"appId": 32873564,
+                      "appName": "LSM"
+                    }, {"appId": 7863409,
+                      "appName": "api-lsm"
+                    } 
+                  ]
+        nullable: true
+    AnyValueNullable:
+      description: Any with the option to be null
+      anyOf:
+        - type: string
+        - type: number
+        - type: integer
+        - type: boolean
+        - type: array
+          items: {}
+        - type: object
+      nullable: true
+    AnyValue:
+      description: Any NOT nullable
+      anyOf:
+        - type: string
+        - type: number
+        - type: integer
+        - type: boolean
+        - type: array
+          items: {}
+        - type: object
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/dialog
+          tokenUrl: /oauth/token
+security:
+  - OAuth2: []
