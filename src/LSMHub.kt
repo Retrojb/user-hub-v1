@@ -150,19 +150,6 @@ interface LSMHub : SwaggerBaseApi {
     ): Unit
 
     /**
-     * Server check
-     * 
-     * @param X-Request-ID null
-     * 
-     * @return Server communicating
-     */
-    @Path("/ping")
-    @Method("GET")
-    suspend fun getPing(
-        @Header("X-Request-ID") X-Request-ID: String
-    ): Unit
-
-    /**
      * null
      * 
      * @return OK

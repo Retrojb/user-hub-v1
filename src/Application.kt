@@ -13,7 +13,6 @@ import io.ktor.auth.*
 import io.ktor.gson.*
 import io.ktor.client.*
 import io.ktor.client.engine.jetty.*
-import io.ktor.client.features.auth.basic.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.*
@@ -21,15 +20,16 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.engine.apache.*
 import com.fasterxml.jackson.databind.*
 import io.ktor.jackson.*
+import io.ktor.server.netty.EngineMain
 import kotlin.reflect.*
 import java.util.*
 import io.ktor.swagger.experimental.*
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
+@JvmOverloads
+fun Application.module() {
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
@@ -55,14 +55,14 @@ fun Application.module(testing: Boolean = false) {
     }
 
     // https://ktor.io/servers/features/https-redirect.html#testing
-    if (!testing) {
-        install(HttpsRedirect) {
-            // The port to redirect to. By default 443, the default HTTPS port.
-            sslPort = 443
-            // 301 Moved Permanently, or 302 Found redirect.
-            permanentRedirect = true
-        }
-    }
+//    if (!testing) {
+//        install(HttpsRedirect) {
+//            // The port to redirect to. By default 443, the default HTTPS port.
+//            sslPort = 443
+//            // 301 Moved Permanently, or 302 Found redirect.
+//            permanentRedirect = true
+//        }
+//    }
 
     install(Authentication) {
     }
@@ -76,18 +76,6 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
-    val client = HttpClient(Apache) {
-        install(BasicAuth) {
-            username = "test"
-            password = "pass"
-        }
-        install(JsonFeature) {
-            serializer = GsonSerializer()
-        }
-        install(Logging) {
-            level = LogLevel.HEADERS
-        }
-    }
     runBlocking {
         // Sample for making a HTTP Client request
         /*

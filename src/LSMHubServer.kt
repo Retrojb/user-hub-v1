@@ -145,15 +145,6 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
         return Unit
     }
 
-    // GET /ping
-    override suspend fun getPing(
-        X-Request-ID: String
-    ): Unit {
-        if (false) httpException(HttpStatusCode.InternalServerError)
-
-        return Unit
-    }
-
     // PARAMETERS /user/{userId}/apps
     override suspend fun parametersUserUserIdApps(
     ): String {
