@@ -27,7 +27,7 @@ interface LSMHub : SwaggerBaseApi {
     @Path("/users")
     @Method("GET")
     suspend fun getAllUsers(
-    ): User
+    ): List<User>
 
     /**
      * Creates a user.
@@ -56,8 +56,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}")
     @Method("GET")
-    suspend fun getUserUserId(
-    ): User
+    suspend fun getUserUserId( userId: String ): User
 
     /**
      * Delete a user by ID.
@@ -321,15 +320,33 @@ interface LSMHub : SwaggerBaseApi {
 }
 
 data class User(
-    val userId: Int,
-    val name: String,
+    internal val userId: String,
+    val userName: String,
     val firstName: String,
     val lastName: String,
     val email: String,
-    val dob: Date,
+    val dob: String,
     val age: String,
-    val apps: List<ComponentsSchemasAppObjElements>
-)
+    val apps: List<Apps>
+) {
+    companion object {
+        fun from(m: Map<String, Any>): User {
+            return User(
+                userId = (getValue("userId", m) as? String).orEmpty(),
+                userName = (getValue("userName", m) as? String).orEmpty(),
+                firstName = (getValue("firstName", m) as? String).orEmpty(),
+                lastName = (getValue("lastName", m) as? String).orEmpty(),
+                email = (getValue("email", m) as? String).orEmpty(),
+                dob = (getValue("dob", m) as? String).orEmpty(),
+                age = (getValue("age", m) as? String).orEmpty(),
+                apps = emptyList()
+
+            )
+        }
+
+        private fun getValue(k: String, m: Map<String, Any>): Any? = m[k]
+    }
+}
 
 data class Apps(
     val appId: Int,
@@ -340,7 +357,7 @@ data class Apps(
 data class UserApps(
     val userId: String,
     val userName: String,
-    val apps: List<ComponentsSchemasAppObjElements>
+    val apps: List<Apps>
 )
 
 data class AppUser(
