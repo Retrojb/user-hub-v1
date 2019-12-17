@@ -16,28 +16,25 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/users")
     @Method("PARAMETERS")
-    suspend fun parametersUsers(
-    ): String
+    suspend fun parametersUsers(): String
 
-    /**
+    /** WORKS
      * return a list of all users
-     * 
+     *
      * @return get all users
      */
     @Path("/users")
     @Method("GET")
-    suspend fun getAllUsers(
-    ): User
+    suspend fun getAllUsers(): List<User>
 
-    /**
+    /** WORKS
      * Creates a user.
      * 
      * @return OK
      */
     @Path("/users")
     @Method("POST")
-    suspend fun createUser(
-    ): String
+    suspend fun createUser(): String
 
     /**
      * null
@@ -46,8 +43,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}")
     @Method("PARAMETERS")
-    suspend fun parametersUserUserId(
-    ): String
+    suspend fun parametersUserUserId(): String
 
     /**
      * Returns a user by ID.
@@ -56,8 +52,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}")
     @Method("GET")
-    suspend fun getUserUserId(
-    ): User
+    suspend fun getUserUserId( userId: String ): User
 
     /**
      * Delete a user by ID.
@@ -66,8 +61,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}")
     @Method("DELETE")
-    suspend fun deleteUserUserId(
-    ): User
+    suspend fun deleteUserUserId(userId: String): User
 
     /**
      * Update user by ID.
@@ -76,8 +70,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}")
     @Method("PUT")
-    suspend fun updateUser(
-    ): Unit
+    suspend fun updateUser(userId: String): Unit
 
     /**
      * null
@@ -86,8 +79,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps")
     @Method("PARAMETERS")
-    suspend fun parametersApps(
-    ): String
+    suspend fun parametersApps(): String
 
     /**
      * returns a list of all applications
@@ -96,8 +88,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps")
     @Method("GET")
-    suspend fun getAllApps(
-    ): List<String>
+    suspend fun getAllApps(): List<String>
 
     /**
      * add an application
@@ -106,8 +97,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps")
     @Method("POST")
-    suspend fun createApp(
-    ): String
+    suspend fun createApp(): String
 
     /**
      * null
@@ -116,8 +106,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}")
     @Method("PARAMETERS")
-    suspend fun parametersAppsAppId(
-    ): String
+    suspend fun parametersAppsAppId(): String
 
     /**
      * Returns an app by ID.
@@ -126,8 +115,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}")
     @Method("GET")
-    suspend fun getApp(
-    ): Apps
+    suspend fun getApp(appId: String): Apps
 
     /**
      * Delete an app by ID.
@@ -136,8 +124,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}")
     @Method("DELETE")
-    suspend fun deleteAppsAppId(
-    ): Apps
+    suspend fun deleteAppsAppId(appId: String): Apps
 
     /**
      * Update application by ID.
@@ -146,8 +133,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}")
     @Method("PUT")
-    suspend fun updateApp(
-    ): Unit
+    suspend fun updateApp(appId: String): Unit
 
     /**
      * null
@@ -156,8 +142,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps")
     @Method("PARAMETERS")
-    suspend fun parametersUserUserIdApps(
-    ): String
+    suspend fun parametersUserUserIdApps(): String
 
     /**
      * returns a list of users apps
@@ -176,8 +161,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps")
     @Method("POST")
-    suspend fun addAppToUser(
-    ): String
+    suspend fun addAppToUser(): String
 
     /**
      * Delete a user app by ID.
@@ -186,8 +170,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps")
     @Method("DELETE")
-    suspend fun deleteUserUserIdApps(
-    ): UserApps
+    suspend fun deleteUserUserIdApps(): UserApps
 
     /**
      * Update users application.
@@ -196,8 +179,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps")
     @Method("PUT")
-    suspend fun updateUserApps(
-    ): Unit
+    suspend fun updateUserApps(): Unit
 
     /**
      * null
@@ -206,8 +188,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps/{appId}")
     @Method("PARAMETERS")
-    suspend fun parametersUserUserIdAppsAppId(
-    ): String
+    suspend fun parametersUserUserIdAppsAppId(): String
 
     /**
      * returns a one of users apps
@@ -216,8 +197,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps/{appId}")
     @Method("GET")
-    suspend fun getOneUserApps(
-    ): UserApps
+    suspend fun getOneUserApps(): UserApps
 
     /**
      * add and app to the user.
@@ -226,8 +206,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps/{appId}")
     @Method("POST")
-    suspend fun addOneAppToUser(
-    ): String
+    suspend fun addOneAppToUser(): String
 
     /**
      * Delete a user app by ID.
@@ -236,8 +215,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps/{appId}")
     @Method("DELETE")
-    suspend fun deleteUserUserIdAppsAppId(
-    ): UserApps
+    suspend fun deleteUserUserIdAppsAppId(): UserApps
 
     /**
      * Update users application.
@@ -246,8 +224,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/user/{userId}/apps/{appId}")
     @Method("PUT")
-    suspend fun updateOneUserApp(
-    ): Unit
+    suspend fun updateOneUserApp(): Unit
 
     /**
      * null
@@ -256,8 +233,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/app/{appId}/users")
     @Method("PARAMETERS")
-    suspend fun parametersAppAppIdUsers(
-    ): String
+    suspend fun parametersAppAppIdUsers(): String
 
     /**
      * returns a list of App users
@@ -266,8 +242,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/app/{appId}/users")
     @Method("GET")
-    suspend fun getAppUsers(
-    ): AppUser
+    suspend fun getAppUsers(): AppUser
 
     /**
      * Delete a user from an app
@@ -276,8 +251,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/app/{appId}/users")
     @Method("DELETE")
-    suspend fun deleteAppAppIdUsers(
-    ): UserApps
+    suspend fun deleteAppAppIdUsers(): UserApps
 
     /**
      * null
@@ -286,8 +260,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}/user/{userId}")
     @Method("PARAMETERS")
-    suspend fun parametersAppsAppIdUserUserId(
-    ): String
+    suspend fun parametersAppsAppIdUserUserId(): String
 
     /**
      * returns a single app user
@@ -296,8 +269,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}/user/{userId}")
     @Method("GET")
-    suspend fun getAnAppsUser(
-    ): AppUser
+    suspend fun getAnAppsUser(): AppUser
 
     /**
      * add and app to the user.
@@ -306,8 +278,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}/user/{userId}")
     @Method("POST")
-    suspend fun addUserToApp(
-    ): String
+    suspend fun addUserToApp(): String
 
     /**
      * Delete a user app by ID.
@@ -316,20 +287,37 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}/user/{userId}")
     @Method("DELETE")
-    suspend fun deleteAppsAppIdUserUserId(
-    ): AppUser
+    suspend fun deleteAppsAppIdUserUserId(): AppUser
 }
 
 data class User(
-    val userId: Int,
-    val name: String,
+    internal val userId: String,
+    val userName: String,
     val firstName: String,
     val lastName: String,
     val email: String,
-    val dob: Date,
+    val dob: String,
     val age: String,
-    val apps: List<ComponentsSchemasAppObjElements>
-)
+    val apps: List<Apps>
+) {
+    companion object {
+        fun from(m: Map<String, Any>): User {
+            return User(
+                userId = (getValue("userId", m) as? String).orEmpty(),
+                userName = (getValue("userName", m) as? String).orEmpty(),
+                firstName = (getValue("firstName", m) as? String).orEmpty(),
+                lastName = (getValue("lastName", m) as? String).orEmpty(),
+                email = (getValue("email", m) as? String).orEmpty(),
+                dob = (getValue("dob", m) as? String).orEmpty(),
+                age = (getValue("age", m) as? String).orEmpty(),
+                apps = emptyList()
+
+            )
+        }
+
+        private fun getValue(k: String, m: Map<String, Any>): Any? = m[k]
+    }
+}
 
 data class Apps(
     val appId: Int,
@@ -340,7 +328,7 @@ data class Apps(
 data class UserApps(
     val userId: String,
     val userName: String,
-    val apps: List<ComponentsSchemasAppObjElements>
+    val apps: List<Apps>
 )
 
 data class AppUser(

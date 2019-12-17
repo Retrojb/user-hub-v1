@@ -1,11 +1,16 @@
 package com.lsm.userHub
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.mongodb.MongoClient
 import java.util.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.swagger.experimental.*
 
 class LSMHubServer() : SwaggerBaseServer, LSMHub {
+
+    val mc = MongoDriver(MongoClient("localhost", 27017), "dev-user-db")
     // PARAMETERS /users
     override suspend fun parametersUsers(
     ): String {
@@ -13,32 +18,25 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
     }
 
     // GET /users
-    override suspend fun getAllUsers(
-    ): User {
+    override suspend fun getAllUsers(): List<User> {
         if (false) httpException(HttpStatusCode.BadRequest)
 
-        return User(
-            userId = 0,
-            name = "name",
-            firstName = "firstName",
-            lastName = "lastName",
-            email = "email",
-            dob = Date(),
-            age = "age",
-            apps = listOf()
-        )
+        val uMap = mc.allFromCollection("users")
+
+        return uMap.map { m -> User.from(m) }
     }
 
     // POST /users
-    override suspend fun createUser(
-    ): String {
-        val body = call().receive<User>()
-
+    override suspend fun createUser(): String {
+        val newUser = call().receive<User>()
+        val mapper = jacksonObjectMapper()
+        val newUserJson  = mapper.writeValueAsString(newUser)
         if (false) httpException(HttpStatusCode.Created)
         if (false) httpException(HttpStatusCode.PaymentRequired)
 
-        return ""
+        return mc.addNewDocument(col = "users", doc = newUserJson ?: "") ?: "failed to create"
     }
+
 
     // PARAMETERS /user/{userId}
     override suspend fun parametersUserUserId(
@@ -47,30 +45,31 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
     }
 
     // GET /user/{userId}
-    override suspend fun getUserUserId(
-    ): User {
-        return User(
-            userId = 0,
-            name = "name",
-            firstName = "firstName",
-            lastName = "lastName",
-            email = "email",
-            dob = Date(),
-            age = "age",
+    override suspend fun getUserUserId(userId: String): User {
+        val errorUser: User = User(
+            userId = "",
+            userName = "",
+            firstName = "",
+            lastName = "",
+            email = "",
+            dob = "",
+            age = "",
             apps = listOf()
         )
+        val userMap = mc.getDocumentById(col = "users", id = userId)
+        return  if (userMap == null ) errorUser else User.from(userMap)
     }
 
     // DELETE /user/{userId}
     override suspend fun deleteUserUserId(
     ): User {
         return User(
-            userId = 0,
-            name = "name",
+            userId = "0",
+            userName = "name",
             firstName = "firstName",
             lastName = "lastName",
             email = "email",
-            dob = Date(),
+            dob = "",
             age = "age",
             apps = listOf()
         )

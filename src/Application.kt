@@ -19,11 +19,35 @@ import kotlinx.coroutines.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.engine.apache.*
 import com.fasterxml.jackson.databind.*
+import com.mongodb.MongoClient
+import com.mongodb.MongoClientOptions
+import com.mongodb.MongoCredential
+import com.mongodb.ServerAddress
 import io.ktor.jackson.*
 import io.ktor.server.netty.EngineMain
 import kotlin.reflect.*
 import java.util.*
 import io.ktor.swagger.experimental.*
+
+const val REST_ENDPOINT = "/user"
+//Local Environment
+const val host = "127.0.0.1"
+const val port = 27017
+val mongoClientLocal = MongoClient(host, port)
+const val defaultDb = "dev-user-db"
+
+
+private val mongoDataService = MongoDriver (
+    mongoClientLocal, defaultDb
+)
+// @TODO: set up the environment for the private dev server
+private val mongoDevDataService = MongoDriver (
+    MongoClient (
+        ServerAddress(host, port),
+        MongoClientOptions.builder().build()
+    ),
+    defaultDb
+)
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
