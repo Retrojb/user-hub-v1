@@ -29,7 +29,6 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
         val mapper = jacksonObjectMapper()
         val newUserJson  = mapper.writeValueAsString(newUser)
         if (false) httpException(HttpStatusCode.Created)
-        if (false) httpException(HttpStatusCode.PaymentRequired)
 
         return mc.addNewDocument(col = "users", doc = newUserJson ?: "") ?: "failed to create"
     }
@@ -93,12 +92,12 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
 
     // POST /apps
     override suspend fun createApp(): String {
-        val body = call().receive<App>()
+        val newApp = call().receive<App>()
+        val mapper = jacksonObjectMapper()
+        val newAppJson  = mapper.writeValueAsString(newApp)
 
-        if (false) httpException(HttpStatusCode.Created)
-        if (false) httpException(HttpStatusCode.NotImplemented)
+        return mc.addNewDocument(col = "apps", doc = newAppJson ?: "") ?: "failed to create"
 
-        return ""
     }
 
     // PARAMETERS /apps/{appId}

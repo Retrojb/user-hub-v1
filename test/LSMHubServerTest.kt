@@ -12,17 +12,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersUsers
      */
-    @Test
-    fun testParametersUsers() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/users") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersUsers() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/users") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getAllUsers
@@ -59,17 +59,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersUserUserId
      */
-    @Test
-    fun testParametersUserUserId() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/user/{userId}") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersUserUserId() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/user/{userId}") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getUserUserId
@@ -121,17 +121,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersApps
      */
-    @Test
-    fun testParametersApps() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/apps") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersApps() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/apps") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getAllApps
@@ -168,17 +168,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersAppsAppId
      */
-    @Test
-    fun testParametersAppsAppId() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/apps/{appId}") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersAppsAppId() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/apps/{appId}") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getApp
@@ -245,17 +245,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersUserUserIdApps
      */
-    @Test
-    fun testParametersUserUserIdApps() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/user/{userId}/apps") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersUserUserIdApps() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/user/{userId}/apps") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getAllUserApps
@@ -324,17 +324,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersUserUserIdAppsAppId
      */
-    @Test
-    fun testParametersUserUserIdAppsAppId() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/user/{userId}/apps/{appId}") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersUserUserIdAppsAppId() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/user/{userId}/apps/{appId}") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getOneUserApps
@@ -403,17 +403,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersAppAppIdUsers
      */
-    @Test
-    fun testParametersAppAppIdUsers() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/app/{appId}/users") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersAppAppIdUsers() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/app/{appId}/users") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getAppUsers
@@ -448,17 +448,17 @@ class SwaggerRoutesTest {
     /**
      * @see LSMHubServer.parametersAppsAppIdUserUserId
      */
-    @Test
-    fun testParametersAppsAppIdUserUserId() {
-        withTestApplication {
-            // @TODO: Adjust path as required
-            handleRequest(HttpMethod.Parameters, "/apps/{appId}/user/{userId}") {
-            }.apply {
-                // @TODO: Your test here
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
-        }
-    }
+//    @Test
+//    fun testParametersAppsAppIdUserUserId() {
+//        withTestApplication {
+//            // @TODO: Adjust path as required
+//            handleRequest(HttpMethod.Parameters, "/apps/{appId}/user/{userId}") {
+//            }.apply {
+//                // @TODO: Your test here
+//                assertEquals(HttpStatusCode.OK, response.status())
+//            }
+//        }
+//    }
 
     /**
      * @see LSMHubServer.getAnAppsUser
