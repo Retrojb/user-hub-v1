@@ -1,6 +1,5 @@
 package com.lsm.userHub
 
-import java.util.*
 import io.ktor.swagger.experimental.*
 
 /**
@@ -88,7 +87,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps")
     @Method("GET")
-    suspend fun getAllApps(): List<String>
+    suspend fun getAllApps(): List<App>
 
     /**
      * add an application
@@ -115,7 +114,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}")
     @Method("GET")
-    suspend fun getApp(appId: String): Apps
+    suspend fun getApp(appId: String): App
 
     /**
      * Delete an app by ID.
@@ -124,7 +123,7 @@ interface LSMHub : SwaggerBaseApi {
      */
     @Path("/apps/{appId}")
     @Method("DELETE")
-    suspend fun deleteAppsAppId(appId: String): Apps
+    suspend fun deleteAppsAppId(appId: String): App
 
     /**
      * Update application by ID.
@@ -298,7 +297,7 @@ data class User(
     val email: String,
     val dob: String,
     val age: String,
-    val apps: List<Apps>
+    val apps: List<App>
 ) {
     companion object {
         fun from(m: Map<String, Any>): User {
@@ -319,16 +318,28 @@ data class User(
     }
 }
 
-data class Apps(
-    val appId: Int,
+data class App(
+    val appId: String,
     val appName: String,
     val appType: List<String>
-)
+) {
+    companion object {
+        fun from(m: Map<String, Any>): App {
+            return App(
+                appId = (getValue("appId", m) as? String).orEmpty(),
+                appName = (getValue("appName", m) as? String).orEmpty(),
+                appType = emptyList()
+            )
+        }
+        private fun getValue(k: String, m: Map<String, Any>): Any? = m[k]
+    }
+
+}
 
 data class UserApps(
     val userId: String,
     val userName: String,
-    val apps: List<Apps>
+    val apps: List<App>
 )
 
 data class AppUser(

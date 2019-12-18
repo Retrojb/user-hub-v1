@@ -1,9 +1,7 @@
 package com.lsm.userHub
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.mongodb.MongoClient
-import java.util.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.swagger.experimental.*
@@ -11,6 +9,7 @@ import io.ktor.swagger.experimental.*
 class LSMHubServer() : SwaggerBaseServer, LSMHub {
 
     val mc = MongoDriver(MongoClient("localhost", 27017), "dev-user-db")
+
     // PARAMETERS /users
     override suspend fun parametersUsers(
     ): String {
@@ -20,9 +19,7 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
     // GET /users
     override suspend fun getAllUsers(): List<User> {
         if (false) httpException(HttpStatusCode.BadRequest)
-
         val uMap = mc.allFromCollection("users")
-
         return uMap.map { m -> User.from(m) }
     }
 
@@ -61,8 +58,7 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
     }
 
     // DELETE /user/{userId}
-    override suspend fun deleteUserUserId(
-    ): User {
+    override suspend fun deleteUserUserId(userId: String): User {
         return User(
             userId = "0",
             userName = "name",
@@ -76,31 +72,28 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
     }
 
     // PUT /user/{userId}
-    override suspend fun updateUser(
-    ): Unit {
+    override suspend fun updateUser(userId: String): Unit {
         if (false) httpException(HttpStatusCode.InternalServerError)
 
         return Unit
     }
 
     // PARAMETERS /apps
-    override suspend fun parametersApps(
-    ): String {
+    override suspend fun parametersApps(): String {
         return ""
     }
 
     // GET /apps
-    override suspend fun getAllApps(
-    ): List<String> {
+    override suspend fun getAllApps(): List<App> {
         if (false) httpException(HttpStatusCode.BadRequest)
 
-        return listOf()
+        val appMap = mc.allFromCollection("apps")
+        return appMap.map { app -> App.from(app) }
     }
 
     // POST /apps
-    override suspend fun createApp(
-    ): String {
-        val body = call().receive<Apps>()
+    override suspend fun createApp(): String {
+        val body = call().receive<App>()
 
         if (false) httpException(HttpStatusCode.Created)
         if (false) httpException(HttpStatusCode.NotImplemented)
@@ -109,50 +102,44 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
     }
 
     // PARAMETERS /apps/{appId}
-    override suspend fun parametersAppsAppId(
-    ): String {
+    override suspend fun parametersAppsAppId(): String {
         return ""
     }
 
     // GET /apps/{appId}
-    override suspend fun getApp(
-    ): Apps {
+    override suspend fun getApp(appId: String): App {
         if (false) httpException(HttpStatusCode.BadRequest)
 
-        return Apps(
-            appId = 0,
+        return App(
+            appId = "0",
             appName = "appName",
             appType = listOf()
         )
     }
 
     // DELETE /apps/{appId}
-    override suspend fun deleteAppsAppId(
-    ): Apps {
-        return Apps(
-            appId = 0,
+    override suspend fun deleteAppsAppId(appId: String): App {
+        return App(
+            appId = "0",
             appName = "appName",
             appType = listOf()
         )
     }
 
     // PUT /apps/{appId}
-    override suspend fun updateApp(
-    ): Unit {
+    override suspend fun updateApp(appId: String): Unit {
         if (false) httpException(HttpStatusCode.InternalServerError)
 
         return Unit
     }
 
     // PARAMETERS /user/{userId}/apps
-    override suspend fun parametersUserUserIdApps(
-    ): String {
+    override suspend fun parametersUserUserIdApps(): String {
         return ""
     }
 
     // GET /user/{userId}/apps
-    override suspend fun getAllUserApps(
-    ): UserApps {
+    override suspend fun getAllUserApps(): UserApps {
         if (false) httpException(HttpStatusCode.BadRequest)
 
         return UserApps(
@@ -163,8 +150,7 @@ class LSMHubServer() : SwaggerBaseServer, LSMHub {
     }
 
     // POST /user/{userId}/apps
-    override suspend fun addAppToUser(
-    ): String {
+    override suspend fun addAppToUser(): String {
         val body = call().receive<User>()
 
         if (false) httpException(HttpStatusCode.Created)
